@@ -1,12 +1,18 @@
 import { generateTerrain } from './terrain-gen';
+import { Renderer } from './renderer';
 import { GameObject } from './game-object';
 
-class Main {
-    public static main(): number {
-        generateTerrain(16);
+const TERRAIN_SIZE = 512;
 
-        return 0;
+class Main {
+    renderer: Renderer;
+
+    constructor() {
+        const canvas: HTMLCanvasElement = <HTMLCanvasElement> document.getElementById('canvas');
+
+        this.renderer = new Renderer(canvas);
+        this.renderer.renderTerrain(generateTerrain(TERRAIN_SIZE));
     }
 }
 
-Main.main();
+new Main();

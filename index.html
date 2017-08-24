@@ -4,7 +4,41 @@
     <title>flight</title>
 </head>
 <body>
-    hi
+    <div id="vertexShader" style="display:none;">
+        attribute float age;
+        attribute float state;
+        varying float fAge;
+        varying float fState;
+
+        void main() {
+            fAge = age;
+            fState = state;
+
+            gl_PointSize = 3.0;
+            gl_Position = projectionMatrix *
+                            modelViewMatrix *
+                            vec4(position, 1.0);
+        }
+    </div>
+
+    <div id="fragmentShader" style="display:none;">
+        varying float fAge;
+        varying float fState;
+
+        void main() {
+            if (fState < 0.5) {
+                gl_FragColor = vec4(0, 0, 0, 0);
+                return;
+            }
+            if (fAge < 0.1) {
+                gl_FragColor = vec4(1.0, (1.0 - fAge * 6.0), 1.0 - (fAge * 10.0), 1.0);
+            } else {
+                gl_FragColor = vec4(1.0 - fAge, (1.0 - fAge) * 0.4, 0, 0.75);
+            }
+        }
+    </div>
+    
+    <canvas id="canvas" width="800" height="600">
     <script src="dist/bundle.js"></script>
 </body>
 </html>
